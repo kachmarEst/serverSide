@@ -5,19 +5,19 @@ const auth = require('../middleware/auth');
 router.route('/').get(auth,(req,res) =>{
     Class.find()
 .then(theClass => res.json(theClass))
-.catch(err => res.status(400).json('Error: '+err));
+.catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
 
 router.route('/:id').get(auth,(req,res) =>{
     Class.findById(req.params.id)
 .then(theClass => res.json(theClass))
-.catch(err => res.status(400).json('Error: '+err));
+.catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
 
 router.route('/:id').delete(auth,(req,res) =>{
     Class.findByIdAndDelete(req.params.id)
 .then(() => res.json('Class Deleted'))
-.catch(err => res.status(400).json('Error: '+err));
+.catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
 
 
@@ -35,9 +35,9 @@ router.route('/update/:id').post(auth,(req,res) =>{
 
         theClass.save()
         .then(()=> res.json('theClass Updated'))
-        .catch(err => res.status(400).json('Error: '+err));
+        .catch(err => res.status(400).json({msg:'class has not been updated '}));
 
-    }).catch(err => res.status(400).json('Error: '+err));
+    }).catch(err => res.status(400).json({msg:'class  not  found'}));
 });
 
 
@@ -57,7 +57,7 @@ router.route('/add').post(auth,(req,res) =>{
 
         newClass.save()
         .then((theClass) => res.json(theClass))
-        .catch(err => res.status(400).json('Error: '+err));
+        .catch(err => res.status(400).json({msg:'User has not been updated '}));
 
 
 

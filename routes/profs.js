@@ -24,9 +24,9 @@ router.route('/:id').delete(auth,(req,res) =>{
 });
 
 router.route('/update/:id').post(auth,(req,res) =>{
-    const {  email,username, password,firstName,lastName,cin,dateEmb } = req.body;
+    const {  email,username, password,firstName,lastName,cin } = req.body;
 
-    if(!username  || !password || !firstName || !lastName || !cin || !dateEmb  || !email){
+    if(!username  || !password || !firstName || !lastName || !cin  || !email){
         return res.status(400).json({msg : 'All fields are required'});
     }
     Prof.findById(req.params.id)
@@ -38,7 +38,6 @@ router.route('/update/:id').post(auth,(req,res) =>{
         prof.firstName = firstName;
         prof.lastName = lastName;
         prof.cin = cin;
-        prof.dateEmb = dateEmb;
         prof.save()
         .then(()=> res.json('Prof Updated'))
         .catch(err => res.status(400).json('Error: '+err));
@@ -49,13 +48,13 @@ router.route('/update/:id').post(auth,(req,res) =>{
 
 router.route('/add').post(auth,(req,res) =>{
 
-    const {  email,username, password,firstName,lastName,cin,dateEmb } = req.body;
+    const {  email,username, password,firstName,lastName,cin } = req.body;
 
-    if(!username  || !password || !firstName || !lastName || !cin || !dateEmb  || !email){
+    if(!username  || !password || !firstName || !lastName || !cin   || !email){
         return res.status(400).json({msg : 'All fields are required'});
     }
 
-    User.findOne({email})
+    Prof.findOne({email})
     .then( user =>{
         if(user) return res.status(400).json({msg:'Already exists'});
         const newProf = new Prof();
@@ -67,7 +66,6 @@ router.route('/add').post(auth,(req,res) =>{
     newProf.firstName = firstName;
         newProf.lastName = lastName;
         newProf.cin = cin;
-        newProf.dateEmb = dateEmb;
         newProf.save()
         .then((prof) => {
             

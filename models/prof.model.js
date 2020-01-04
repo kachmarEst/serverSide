@@ -15,8 +15,7 @@ username:{
     type:String,
     required:true,
     unique: true,
-    trim:true,
-    minlength:6
+    trim:true
 },
 firstName:{
     type:String,
@@ -31,9 +30,6 @@ cin:{
     default:'',
     unique: true
 
-},
-dateEmb:{
-    type:Date
 }
 },
 {

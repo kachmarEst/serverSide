@@ -42,9 +42,9 @@ router.route('/update/:id').post(auth,(req,res) =>{
         user.email = email;
         user.save()
         .then(()=> res.json({msg:'User Updated'}))
-        .catch(err => res.status(400).json('Error: '+err));
+        .catch(err => res.status(400).json({msg:'User has not been updated '}));
 
-    }).catch(err => res.status(400).json('Error: '+err));
+    }).catch(err => res.status(400).json({msg:'User  not  found'}));
 });
 
 

@@ -8,6 +8,8 @@ const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const profsRouter = require('./routes/profs');
 const studentsRouter = require('./routes/students');
+const classesRouter = require('./routes/classes');
+
 
 
 app.use(cors());
@@ -23,6 +25,7 @@ connection.once('open',function(){
 app.use('/users',usersRouter);
 app.use('/students',studentsRouter);
 app.use('/profs',profsRouter);
+app.use('/classes',classesRouter);
 app.use('/auth',authRouter);
 
  
