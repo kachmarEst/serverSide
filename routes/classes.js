@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Class = require('../models/class.model');
+const Element = require('../models/element.model');
+
 const auth = require('../middleware/auth');
 
 router.route('/').get(auth,(req,res) =>{
@@ -16,7 +18,9 @@ router.route('/:id').get(auth,(req,res) =>{
 
 router.route('/:id').delete(auth,(req,res) =>{
     Class.findByIdAndDelete(req.params.id)
-.then(() => res.json('Class Deleted'))
+.then(() => {
+    Element.deleteMany({class_id:req.params.id}).then(()=>res.json('Class Deleted'));
+    })
 .catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
 

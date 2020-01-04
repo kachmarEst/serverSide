@@ -1,10 +1,30 @@
 const router = require('express').Router();
 const Element = require('../models/element.model');
+const Class = require('../models/class.model');
+const Prof = require('../models/prof.model');
+
 const auth = require('../middleware/auth');
 
 router.route('/').get(auth,(req,res) =>{
     Element.find()
 .then(theElement => res.json(theElement))
+.catch(err => res.status(400).json({msg:'Data Not Found'}));
+});
+
+router.route('/all').get(auth,(req,res) =>{
+    Element.find()
+.then(theElement => {
+
+        Prof.find().then(prof =>{
+            Class.find().then(clas =>{
+
+                res.json({elements:theElement,profs:prof,classes:clas})
+
+            })
+        })
+
+
+})
 .catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
 
@@ -52,7 +72,7 @@ router.route('/add').post(auth,(req,res) =>{
     }
 
 
-        const theElement= new Class();
+        const theElement= new Element();
 
         theElement.class_id = class_id;
         theElement.prof_id = prof_id;

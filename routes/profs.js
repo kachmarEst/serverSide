@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Prof = require('../models/prof.model');
+const Element = require('../models/element.model');
+
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const bcrypt = require('bcrypt');
@@ -19,7 +21,13 @@ router.route('/:id').get(auth,(req,res) =>{
 
 router.route('/:id').delete(auth,(req,res) =>{
     Prof.findByIdAndDelete(req.params.id)
-.then(() => res.json('Prof Deleted'))
+.then(() =>{ 
+    
+    Element.deleteMany({prof_id:req.params.id}).then(
+        () => res.json('Prof Deleted')
+    )
+       })
+
 .catch(err => res.status(400).json('Error: '+err));
 });
 
