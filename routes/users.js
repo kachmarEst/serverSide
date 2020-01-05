@@ -14,6 +14,7 @@ router.route('/').get(auth,(req,res) =>{
 });
 
 
+
 router.route('/:id').get(auth,(req,res) =>{
     User.findById(req.params.id)
     .select('-password')

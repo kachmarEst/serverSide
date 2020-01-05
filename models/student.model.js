@@ -20,14 +20,6 @@ cne:{
     default:'',
     unique: true
 },
-filiere:{
-    type:String,
-    default:''
-},
-annee:{
-    type:String,
-    default:''
-},
 class_id:{
     type:String,
     default:''

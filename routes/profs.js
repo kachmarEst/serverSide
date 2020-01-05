@@ -10,13 +10,13 @@ const key = require('../keys/config').JWTSecret;
 router.route('/').get(auth,(req,res) =>{
     Prof.find()
 .then(profs => res.json(profs))
-.catch(err => res.status(400).json('Error: '+err));
+.catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
 
 router.route('/:id').get(auth,(req,res) =>{
     Prof.findById(req.params.id)
 .then(prof => res.json(prof))
-.catch(err => res.status(400).json('Error: '+err));
+.catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
 
 router.route('/:id').delete(auth,(req,res) =>{
@@ -28,8 +28,8 @@ router.route('/:id').delete(auth,(req,res) =>{
     )
        })
 
-.catch(err => res.status(400).json('Error: '+err));
-});
+       .catch(err => res.status(400).json({msg:'Data Not Found'}));
+    });
 
 router.route('/update/:id').post(auth,(req,res) =>{
     const {  email,username, password,firstName,lastName,cin } = req.body;
@@ -48,9 +48,10 @@ router.route('/update/:id').post(auth,(req,res) =>{
         prof.cin = cin;
         prof.save()
         .then(()=> res.json('Prof Updated'))
-        .catch(err => res.status(400).json('Error: '+err));
+        .catch(err => res.status(400).json({msg:'Data Not Found'}));
 
-    }).catch(err => res.status(400).json('Error: '+err));
+    }).catch(err => res.status(400).json({msg:'Data Not Found'}));
+
 });
 
 

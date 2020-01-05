@@ -30,7 +30,21 @@ router.route('/all').get(auth,(req,res) =>{
 
 router.route('/:id').get(auth,(req,res) =>{
     Element.findById(req.params.id)
-.then(theElement => res.json(theElement))
+.then(theElement => {
+        Class.findById(theElement.class_id)
+        .then((theClass) =>{
+            Prof.findById(theElement.prof_id)
+            .then(theProf =>{
+
+                res.json({elem: theElement,prof:theProf,clas:theClass})
+
+            }).catch(err => res.status(400).json({msg:'Data Not Found'}));
+
+        }).catch(err => res.status(400).json({msg:'Data Not Found'}));
+
+
+
+})
 .catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
 
