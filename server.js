@@ -10,6 +10,8 @@ const profsRouter = require('./routes/profs');
 const studentsRouter = require('./routes/students');
 const classesRouter = require('./routes/classes');
 const elementsRouter = require('./routes/element');
+const absencesRouter = require('./routes/absence');
+const sessionsRouter = require('./routes/session');
 
 
 
@@ -30,6 +32,8 @@ app.use('/profs',profsRouter);
 app.use('/classes',classesRouter);
 app.use('/auth',authRouter);
 app.use('/elements',elementsRouter);
+app.use('/absences',absencesRouter);
+app.use('/sessions',sessionsRouter);
 
  
 app.listen(PORT,function(){

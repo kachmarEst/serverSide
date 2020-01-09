@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Prof = require('../models/prof.model');
 const Element = require('../models/element.model');
+const Class = require('../models/class.model');
 
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
@@ -12,6 +13,21 @@ router.route('/').get(auth,(req,res) =>{
 .then(profs => res.json(profs))
 .catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
+
+
+router.route('/dashboard/:id').get(auth,(req,res)=>{
+        prof_id = req.params.id;
+
+        Element.find({prof_id}).then( elements=>{
+
+            Class.find().then(classes =>{
+                res.status(200).json({classes,elements});
+            }).catch(err => res.status(400).json({msg:'Data Not Found'}));
+
+            }
+        ).catch(err => res.status(400).json({msg:'Data Not Found'}));
+
+})
 
 router.route('/:id').get(auth,(req,res) =>{
     Prof.findById(req.params.id)

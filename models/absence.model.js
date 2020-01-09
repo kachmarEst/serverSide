@@ -1,26 +1,19 @@
 const mongoose =  require('mongoose');
 const Schema = mongoose.Schema;
-let Students = new Schema({
-
-firstName:{
+let Absence = new Schema({
+element_id:{
     type:String,
     default:''
 },
-lastName:{
+session_id:{
     type:String,
     default:''
 },
-cin:{
+etudiant_id:{
     type:String,
-    default:'',
-    unique: true
+    default:''
 },
-cne:{
-    type:String,
-    default:'',
-    unique: true
-},
-class_id:{
+prof_id:{
     type:String,
     default:''
 },
@@ -33,4 +26,4 @@ hours:{
     timestamps:true
 });
 
-module.exports = mongoose.model('Students',Students);
+module.exports = mongoose.model('Absence',Absence);
