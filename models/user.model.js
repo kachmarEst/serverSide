@@ -17,6 +17,25 @@ username:{
     required:true,
     unique: true,
     trim:true
+},
+role:{
+    type:String,
+    required:true,
+    trim:true
+},
+firstName:{
+    type:String,
+    default:''
+},
+lastName:{
+    type:String,
+    default:''
+},
+cin:{
+    type:String,
+    default:'',
+    unique: true
+
 }
 },
 {

@@ -50,22 +50,7 @@ Absence.find({session_id})
 })
 .catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
-// router.route('/all').get(auth,(req,res) =>{
-//     Element.find()
-// .then(theElement => {
 
-//         Prof.find().then(prof =>{
-//             Class.find().then(clas =>{
-
-//                 res.json({elements:theElement,profs:prof,classes:clas})
-
-//             })
-//         })
-
-
-// })
-// .catch(err => res.status(400).json({msg:'Data Not Found'}));
-// });
 
 router.route('/:id').get(auth,(req,res) =>{
     Absence.findById(req.params.id)
@@ -79,6 +64,23 @@ router.route('/:id').delete(auth,(req,res) =>{
 .catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
 
+router.route('/counts/stats/:id').get((req,res) =>{
+
+    Absence.aggregate([
+        { $match: { prof_id: req.params.id } },
+
+        {
+            $group:
+            {
+                _id: '$element_id',
+                hours:  {$sum:'$hours'}
+            }
+        }
+    ])
+    .then((absen)=>{
+res.status(200).json(absen)
+    })
+});
 
 router.route('/update/:id').post(auth,(req,res) =>{
     const { hours } = req.body;

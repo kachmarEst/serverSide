@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const User = require('../models/user.model');
-const Prof = require('../models/prof.model');
 
 const jwt = require('jsonwebtoken');
 const key = require('../keys/config').JWTSecret;
@@ -8,42 +7,10 @@ const auth = require('../middleware/auth');
 const bcrypt = require('bcrypt');
 
 
-router.route('/profs').post((req,res) =>{
-    const{username,password} = req.body;
-    if(!username || !password){
-        return res.status(400).json({msg : 'All fields are required'});
-    }
-    Prof.findOne({username})
-    .then(prof =>{
-        if(!prof) return res.status(400).json({msg :  'Doesnt exist'});
-
-        bcrypt.compare(password,prof.password)
-        .then(isMatch => {
-            if(!isMatch) return res.status(400).json({msg: 'Invalid '});
-             jwt.sign(
-                 {id: prof.id},
-                 key,
-                 {expiresIn:3600},
-                 (err,token) => {
-                     if(err) throw err;
-                     res.json({
-                         token,
-                         prof:{
-                             id:prof.id,
-                             username:prof.username,
-                             email:prof.email
-                         }
-                     });
-                 }
-             )
-        })
-    })
 
 
-});
 
-
-router.route('/admin').post((req,res) =>{
+router.route('/authentication').post((req,res) =>{
     const{username,password} = req.body;
     if(!username || !password){
         return res.status(400).json({msg : 'All fields are required'});
@@ -66,7 +33,7 @@ router.route('/admin').post((req,res) =>{
                          user:{
                              id:user.id,
                              username:user.username,
-                             email:user.email
+                             role:user.role
                          }
                      });
                  }

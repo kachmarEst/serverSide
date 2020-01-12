@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Element = require('../models/element.model');
 const Class = require('../models/class.model');
-const Prof = require('../models/prof.model');
+const User = require('../models/user.model');
 
 const auth = require('../middleware/auth');
 
@@ -15,7 +15,7 @@ router.route('/all').get(auth,(req,res) =>{
     Element.find()
 .then(theElement => {
 
-        Prof.find().then(prof =>{
+        User.find({role:'professor'}).then(prof =>{
             Class.find().then(clas =>{
 
                 res.json({elements:theElement,profs:prof,classes:clas})
@@ -33,7 +33,7 @@ router.route('/:id').get(auth,(req,res) =>{
 .then(theElement => {
         Class.findById(theElement.class_id)
         .then((theClass) =>{
-            Prof.findById(theElement.prof_id)
+            User.findById(theElement.prof_id)
             .then(theProf =>{
 
                 res.json({elem: theElement,prof:theProf,clas:theClass})

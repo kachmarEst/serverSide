@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const Element = require('../models/element.model');
-const Prof = require('../models/prof.model');
 const Session = require('../models/session.model');
 const auth = require('../middleware/auth');
 
@@ -9,23 +8,7 @@ router.route('/').get(auth,(req,res) =>{
 .then(theSession => res.json(theSession))
 .catch(err => res.status(400).json({msg:'Data Not Found'}));
 });
- 
-// router.route('/all').get(auth,(req,res) =>{
-//     Session.find()
-// .then(theSession => {
 
-//         Prof.find().then(prof =>{
-//             Class.find().then(clas =>{
-
-//                 res.json({elements:theElement,profs:prof,classes:clas})
-
-//             })
-//         })
-
-
-// })
-// .catch(err => res.status(400).json({msg:'Data Not Found'}));
-// });
 
 router.route('/:id').get(auth,(req,res) =>{
     Session.findById(req.params.id)
